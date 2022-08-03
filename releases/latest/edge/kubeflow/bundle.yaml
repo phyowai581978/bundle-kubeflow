@@ -27,6 +27,8 @@ applications:
     channel: latest/edge
     scale: 1
     trust: true
+    options:
+      kind: ingress
     _github_repo_name: istio-operators
   istio-pilot:
     charm: istio-pilot
