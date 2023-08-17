@@ -113,7 +113,7 @@ jobs:
       - name: Run UATs
         run: |
           cd charmed-kubeflow-uats/
-          git checkout main
+          git checkout kf-4152-pytest-filter-tests
           sg microk8s -c "tox -e kubeflow"
 
       - name: Upload selenium screenshots
