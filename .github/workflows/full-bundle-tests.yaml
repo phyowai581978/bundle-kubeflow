@@ -12,7 +12,7 @@ on:
 
 jobs:
   test-bundle:
-    runs-on: [self-hosted, linux, X64, two-xlarge, focal]
+    runs-on: [self-hosted, linux, X64, two-xlarge]
     steps:
       - uses: actions/checkout@v3
       - name: Parse and enable DNS server
@@ -22,6 +22,21 @@ jobs:
           echo "Using following DNS Server: $dns_server"
 
           echo "MY_ADDONS=hostpath-storage ingress dns:$dns_server rbac registry metallb:'10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'" >> $GITHUB_OUTPUT
+
+      - name: Setup Python
+        run: |
+          sudo apt-get update -yqq
+          sudo apt-get build-dep python3
+          sudo apt-get install pkg-config
+
+          curl https://pyenv.run | bash
+
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+
+          pyenv install 3.8.16
+          pyenv global 3.8.16
 
       - name: Install tools
         run: |
