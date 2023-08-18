@@ -25,7 +25,7 @@ jobs:
 
       - name: Setup Python
         run: |
-          sudo echo "deb-src http://archive.ubuntu.com/ubuntu/ jammy main" >> /etc/apt/sources.list
+          echo "deb-src http://archive.ubuntu.com/ubuntu/ jammy main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -yqq
           sudo apt-get build-dep python3
           sudo apt-get install pkg-config
