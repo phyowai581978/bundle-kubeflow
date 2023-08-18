@@ -27,8 +27,8 @@ jobs:
         run: |
           echo "deb-src http://archive.ubuntu.com/ubuntu/ jammy main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -yqq
-          sudo apt-get build-dep python3
-          sudo apt-get install pkg-config
+          sudo apt-get build-dep -yqq python3
+          sudo apt-get install -yqq pkg-config
 
           curl https://pyenv.run | bash
 
