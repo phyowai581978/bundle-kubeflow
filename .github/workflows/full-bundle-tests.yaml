@@ -26,24 +26,28 @@ jobs:
       - name: Setup Python
         run: |
           echo "deb-src http://archive.ubuntu.com/ubuntu/ jammy main" | sudo tee -a /etc/apt/sources.list
+
           sudo apt-get update -yqq
           sudo apt-get build-dep -yqq python3
           sudo apt-get install -yqq pkg-config
 
+          sudo apt-get install -yqq build-essential gdb lcov pkg-config \
+            libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
+            libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
+            lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+
           curl https://pyenv.run | bash
 
-          export PATH="$HOME/.pyenv/bin:$PATH"
+          export PYENV_ROOT="$HOME/.pyenv"
+          command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
           eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
 
           pyenv install 3.8.16
           pyenv global 3.8.16
 
       - name: Install tools
         run: |
-          sudo apt-get update -yqq
-          sudo apt-get install -yqq python3-pip
-          sudo --preserve-env=http_proxy,https_proxy,no_proxy pip3 install tox
+          sudo --preserve-env=http_proxy,https_proxy,no_proxy pip install tox
           sudo snap install charmcraft --classic
           sudo snap install firefox
 
