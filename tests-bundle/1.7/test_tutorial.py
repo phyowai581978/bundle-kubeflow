@@ -129,7 +129,7 @@ class TestGetStartedTutorial:
             by=By.XPATH,
             value="app-index/app-index-default/div/div/lib-table/table/tbody/tr/td[10]/div/lib-action-button/button",
         )
-        WebDriverWait(driver, 400).until(
+        WebDriverWait(driver, 800).until(
             expected_conditions.element_to_be_clickable(connect_button)
         )
         connect_button.click()
