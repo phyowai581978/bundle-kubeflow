@@ -51,10 +51,6 @@ jobs:
           sudo snap install charmcraft --classic
           sudo snap install firefox
 
-      - name: Clone Kubeflow UATs
-        run: |
-          git clone https://github.com/canonical/charmed-kubeflow-uats.git
-
       - name: Setup microk8s
         run: |
           sudo snap install microk8s --classic --channel=1.24/stable
@@ -130,10 +126,14 @@ jobs:
       #     export GH_TOKEN=${{ secrets.GITHUB_TOKEN }}
       #     sg microk8s -c "tox -e full_bundle_tests -- ${{ github.event.inputs.bundle-source }}"
 
+      - name: Checkout Kubeflow UATs
+        run: |
+          git clone https://github.com/canonical/charmed-kubeflow-uats.git
+          cd charmed-kubeflow-uats/
+          git checkout main
+
       - name: Run UATs
         run: |
-          cd charmed-kubeflow-uats/
-          git checkout kf-4152-pytest-filter-tests
           sg microk8s -c "tox -e kubeflow"
 
       - name: Upload selenium screenshots
